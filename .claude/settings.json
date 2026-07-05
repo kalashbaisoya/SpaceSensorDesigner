@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo \"=== project .claude ===\"; ls -la \"d:/Development/csharp_workspace/SpaceSensorDesigner/.claude\" 2>/dev/null || echo \"\\(no project .claude folder\\)\"; echo; echo \"=== user .claude \\(top level\\) ===\"; ls -la \"C:/Users/kalash/.claude\" 2>/dev/null | head -40)",
+      "Read(//c/Users/kalash/.claude/**)"
+    ]
+  }
+}

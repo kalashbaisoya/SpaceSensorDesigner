@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6BF2A450-32D8-4E29-BB01-0E71B20C2204}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceSensorDesigner.Core", "src\SpaceSensorDesigner.Core\SpaceSensorDesigner.Core.csproj", "{B7CA78BD-E77C-4494-99F5-FA2F3643587A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceSensorDesigner.App", "src\SpaceSensorDesigner.App\SpaceSensorDesigner.App.csproj", "{AE1807EE-F6D5-4653-BD20-BC2C399F8D99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D6055768-A820-42A1-9E18-204A5E95366D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceSensorDesigner.Tests", "tests\SpaceSensorDesigner.Tests\SpaceSensorDesigner.Tests.csproj", "{1FB40AF7-A268-4D33-B34F-050549BC8433}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B7CA78BD-E77C-4494-99F5-FA2F3643587A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7CA78BD-E77C-4494-99F5-FA2F3643587A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7CA78BD-E77C-4494-99F5-FA2F3643587A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7CA78BD-E77C-4494-99F5-FA2F3643587A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE1807EE-F6D5-4653-BD20-BC2C399F8D99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE1807EE-F6D5-4653-BD20-BC2C399F8D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE1807EE-F6D5-4653-BD20-BC2C399F8D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE1807EE-F6D5-4653-BD20-BC2C399F8D99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FB40AF7-A268-4D33-B34F-050549BC8433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB40AF7-A268-4D33-B34F-050549BC8433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB40AF7-A268-4D33-B34F-050549BC8433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB40AF7-A268-4D33-B34F-050549BC8433}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B7CA78BD-E77C-4494-99F5-FA2F3643587A} = {6BF2A450-32D8-4E29-BB01-0E71B20C2204}
+		{AE1807EE-F6D5-4653-BD20-BC2C399F8D99} = {6BF2A450-32D8-4E29-BB01-0E71B20C2204}
+		{1FB40AF7-A268-4D33-B34F-050549BC8433} = {D6055768-A820-42A1-9E18-204A5E95366D}
+	EndGlobalSection
+EndGlobal

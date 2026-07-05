@@ -1,0 +1,233 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vm="clr-namespace:SpaceSensorDesigner.App.ViewModels"
+                    xmlns:conv="clr-namespace:SpaceSensorDesigner.App.Converters">
+
+    <conv:RoomTypeToBrushConverter x:Key="RoomTypeToBrush" />
+    <conv:BoolToVisibilityConverter x:Key="BoolToVis" />
+
+    <!-- ===== Library item (draggable) ===== -->
+    <DataTemplate x:Key="LibraryItemTemplate">
+        <Border Background="{StaticResource PanelBrush}" BorderBrush="{StaticResource BorderBrush2}"
+                BorderThickness="1" CornerRadius="8" Margin="0,3" Padding="8,6" Cursor="Hand"
+                ToolTip="Drag onto the canvas to place">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Glyph}" FontSize="18" Width="26"
+                           VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="{Binding DisplayName}" FontSize="12.5"
+                               Foreground="{StaticResource TextBrush}" />
+                    <TextBlock Text="{Binding Detail}" FontSize="10.5"
+                               Foreground="{StaticResource TextMutedBrush}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+
+    <!-- ===== Properties: Sensor (MLX90640 thermal camera, Butlr style) ===== -->
+    <DataTemplate DataType="{x:Type vm:SensorPropertiesViewModel}">
+        <StackPanel>
+            <TextBlock Text="Sensor Settings" Style="{StaticResource TitleText}" />
+
+            <!-- Room + Sensor mode rows -->
+            <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                <TextBlock Text="Room" Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="1" Text="{Binding RoomName}" TextAlignment="Right" FontWeight="SemiBold" Foreground="{StaticResource TextBrush}" />
+            </Grid>
+
+            <TextBlock Text="Sensor Name" Style="{StaticResource FieldLabel}" />
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+
+            <!-- Distance-to-wall readouts (value pills) -->
+            <Grid Margin="0,12,0,0">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                <Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,4,6">
+                    <TextBlock Text="Distance to Left" Foreground="{StaticResource TextMutedBrush}" FontSize="11" Margin="0,0,0,3"/>
+                    <Border Style="{StaticResource ValuePill}"><TextBlock Text="{Binding DistanceToLeft}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"/></Border>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="4,0,0,6">
+                    <TextBlock Text="Distance to Right" Foreground="{StaticResource TextMutedBrush}" FontSize="11" Margin="0,0,0,3"/>
+                    <Border Style="{StaticResource ValuePill}"><TextBlock Text="{Binding DistanceToRight}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"/></Border>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,4,0">
+                    <TextBlock Text="Distance to Top" Foreground="{StaticResource TextMutedBrush}" FontSize="11" Margin="0,0,0,3"/>
+                    <Border Style="{StaticResource ValuePill}"><TextBlock Text="{Binding DistanceToTop}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"/></Border>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="4,0,0,0">
+                    <TextBlock Text="Distance to Bottom" Foreground="{StaticResource TextMutedBrush}" FontSize="11" Margin="0,0,0,3"/>
+                    <Border Style="{StaticResource ValuePill}"><TextBlock Text="{Binding DistanceToBottom}" Foreground="{StaticResource TextBrush}" FontWeight="SemiBold"/></Border>
+                </StackPanel>
+            </Grid>
+
+            <!-- Coverage tuning (this app's functional controls) -->
+            <TextBlock Text="COVERAGE" Style="{StaticResource SectionHeader}" Margin="0,14,0,0" />
+            <TextBlock Text="{Binding FootprintText}" Foreground="{StaticResource TextMutedBrush}" FontSize="11.5" Margin="0,0,0,4" />
+
+            <TextBlock Text="Mount Height (m)" Style="{StaticResource FieldLabel}" />
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Right" Width="42" TextAlignment="Right" Text="{Binding Height, StringFormat={}{0:0.0}}" Foreground="{StaticResource TextBrush}" />
+                <Slider Minimum="1.5" Maximum="6" Value="{Binding Height}" TickFrequency="0.1" IsSnapToTickEnabled="True" />
+            </DockPanel>
+            <TextBlock Text="Horizontal FOV (°)" Style="{StaticResource FieldLabel}" />
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Right" Width="42" TextAlignment="Right" Text="{Binding HorizontalFovDegrees, StringFormat={}{0:0}}" Foreground="{StaticResource TextBrush}" />
+                <Slider Minimum="10" Maximum="170" Value="{Binding HorizontalFovDegrees}" TickFrequency="5" IsSnapToTickEnabled="True" />
+            </DockPanel>
+            <TextBlock Text="Vertical FOV (°)" Style="{StaticResource FieldLabel}" />
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Right" Width="42" TextAlignment="Right" Text="{Binding VerticalFovDegrees, StringFormat={}{0:0}}" Foreground="{StaticResource TextBrush}" />
+                <Slider Minimum="10" Maximum="170" Value="{Binding VerticalFovDegrees}" TickFrequency="5" IsSnapToTickEnabled="True" />
+            </DockPanel>
+            <TextBlock Text="Orientation (°)" Style="{StaticResource FieldLabel}" />
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Right" Width="42" TextAlignment="Right" Text="{Binding OrientationDegrees, StringFormat={}{0:0}}" Foreground="{StaticResource TextBrush}" />
+                <Slider Minimum="0" Maximum="360" Value="{Binding OrientationDegrees}" TickFrequency="5" IsSnapToTickEnabled="True" />
+            </DockPanel>
+
+            <!-- Live feed (simulated telemetry, refreshed on a timer) -->
+            <Border Background="{StaticResource SidebarBrush}" CornerRadius="12" Padding="14" Margin="0,14,0,0">
+                <StackPanel>
+                    <DockPanel Margin="0,0,0,8">
+                        <TextBlock Text="LIVE FEED" Style="{StaticResource SectionHeader}" Margin="0" />
+                        <Border DockPanel.Dock="Right" Background="{StaticResource AccentSoftBrush}" CornerRadius="6" Padding="6,1"
+                                HorizontalAlignment="Right" Visibility="{Binding IsSimulatedFeed, Converter={StaticResource BoolToVis}}">
+                            <TextBlock Text="SIMULATED" FontSize="9" FontWeight="SemiBold" Foreground="{StaticResource AccentBrush}" />
+                        </Border>
+                    </DockPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="Status" Foreground="{StaticResource TextMutedBrush}" Margin="0,3"/>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,3">
+                            <Ellipse Width="8" Height="8" VerticalAlignment="Center" Margin="0,0,5,0">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Setter Property="Fill" Value="{StaticResource CoveredBrush}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding LiveOnline}" Value="False">
+                                                <Setter Property="Fill" Value="{StaticResource UncoveredBrush}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+                            <TextBlock Text="{Binding LiveStatusText}" Foreground="{StaticResource TextBrush}"/>
+                        </StackPanel>
+
+                        <TextBlock Grid.Row="1" Text="Last seen" Foreground="{StaticResource TextMutedBrush}" Margin="0,3"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LiveLastSeen}" TextAlignment="Right" Foreground="{StaticResource TextBrush}" Margin="0,3"/>
+                        <TextBlock Grid.Row="2" Text="Occupancy" Foreground="{StaticResource TextMutedBrush}" Margin="0,3"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding LiveOccupancyText}" TextAlignment="Right" FontWeight="SemiBold" Foreground="{StaticResource TextBrush}" Margin="0,3"/>
+                        <TextBlock Grid.Row="3" Text="Ambient temp" Foreground="{StaticResource TextMutedBrush}" Margin="0,3"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding LiveAmbientText}" TextAlignment="Right" Foreground="{StaticResource TextBrush}" Margin="0,3"/>
+                        <TextBlock Grid.Row="4" Text="Peak temp" Foreground="{StaticResource TextMutedBrush}" Margin="0,3"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding LivePeakText}" TextAlignment="Right" Foreground="{StaticResource TextBrush}" Margin="0,3"/>
+                        <TextBlock Grid.Row="5" Text="Battery" Foreground="{StaticResource TextMutedBrush}" Margin="0,3"/>
+                        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding LiveBatteryText}" TextAlignment="Right" Foreground="{StaticResource TextBrush}" Margin="0,3"/>
+                    </Grid>
+                    <ProgressBar Height="6" Minimum="0" Maximum="100" Value="{Binding LiveBattery, Mode=OneWay}"
+                                 Foreground="{StaticResource CoveredBrush}" Margin="0,8,0,4" />
+
+                    <Rectangle Height="1" Fill="{StaticResource BorderBrush2}" Margin="0,8" />
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="MAC address" Foreground="{StaticResource TextMutedBrush}" Margin="0,2"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding MacAddress}" TextAlignment="Right" Foreground="{StaticResource TextBrush}" Margin="0,2"/>
+                        <TextBlock Grid.Row="1" Text="Network ID" Foreground="{StaticResource TextMutedBrush}" Margin="0,2"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding NetworkId}" TextAlignment="Right" Foreground="{StaticResource TextBrush}" Margin="0,2"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- ===== Properties: Furniture ===== -->
+    <DataTemplate DataType="{x:Type vm:FurniturePropertiesViewModel}">
+        <StackPanel>
+            <TextBlock Text="Furniture" Style="{StaticResource TitleText}" />
+            <TextBlock Text="{Binding TypeName}" Foreground="{StaticResource AccentBrush}"
+                       FontSize="12" Margin="0,2,0,6" />
+
+            <TextBlock Text="Name" Style="{StaticResource FieldLabel}" />
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Text="Width (m)" Style="{StaticResource FieldLabel}" />
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Right" Width="42" TextAlignment="Right"
+                           Text="{Binding Width, StringFormat={}{0:0.0}}" Foreground="{StaticResource TextBrush}" />
+                <Slider Minimum="0.2" Maximum="6" Value="{Binding Width}" TickFrequency="0.1" IsSnapToTickEnabled="True" />
+            </DockPanel>
+
+            <TextBlock Text="Depth (m)" Style="{StaticResource FieldLabel}" />
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Right" Width="42" TextAlignment="Right"
+                           Text="{Binding Depth, StringFormat={}{0:0.0}}" Foreground="{StaticResource TextBrush}" />
+                <Slider Minimum="0.2" Maximum="6" Value="{Binding Depth}" TickFrequency="0.1" IsSnapToTickEnabled="True" />
+            </DockPanel>
+
+            <TextBlock Text="Rotation (°)" Style="{StaticResource FieldLabel}" />
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Right" Width="42" TextAlignment="Right"
+                           Text="{Binding RotationDegrees, StringFormat={}{0:0}}" Foreground="{StaticResource TextBrush}" />
+                <Slider Minimum="0" Maximum="360" Value="{Binding RotationDegrees}" TickFrequency="15" IsSnapToTickEnabled="True" />
+            </DockPanel>
+            <TextBlock Text="Tip: in the 2D view, drag the corner handles to resize and the top handle to rotate."
+                       Foreground="{StaticResource TextMutedBrush}" FontSize="10.5" TextWrapping="Wrap" Margin="0,10,0,0" />
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- ===== Properties: Opening (door / window) ===== -->
+    <DataTemplate DataType="{x:Type vm:OpeningPropertiesViewModel}">
+        <StackPanel>
+            <TextBlock Text="Opening" Style="{StaticResource TitleText}" />
+
+            <TextBlock Text="Type" Style="{StaticResource FieldLabel}" />
+            <ComboBox ItemsSource="{Binding Kinds}" SelectedItem="{Binding Kind}" />
+
+            <TextBlock Text="Width (m)" Style="{StaticResource FieldLabel}" />
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Right" Width="42" TextAlignment="Right"
+                           Text="{Binding Width, StringFormat={}{0:0.0}}" Foreground="{StaticResource TextBrush}" />
+                <Slider Minimum="0.3" Maximum="3.0" Value="{Binding Width}" TickFrequency="0.1" IsSnapToTickEnabled="True" />
+            </DockPanel>
+
+            <Border Background="{StaticResource SidebarBrush}" CornerRadius="10" Padding="12" Margin="0,12,0,0">
+                <TextBlock Text="{Binding ThermalNote}" TextWrapping="Wrap"
+                           Foreground="{StaticResource TextMutedBrush}" FontSize="11.5" />
+            </Border>
+        </StackPanel>
+    </DataTemplate>
+
+    <!-- ===== Properties: Room ===== -->
+    <DataTemplate DataType="{x:Type vm:RoomPropertiesViewModel}">
+        <StackPanel>
+            <TextBlock Text="Room" Style="{StaticResource TitleText}" />
+
+            <TextBlock Text="Name" Style="{StaticResource FieldLabel}" />
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+
+            <TextBlock Text="Room Type" Style="{StaticResource FieldLabel}" />
+            <ComboBox ItemsSource="{Binding RoomTypes}" SelectedItem="{Binding Type}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="14" Height="14" CornerRadius="3" Margin="0,0,8,0"
+                                    Background="{Binding Converter={StaticResource RoomTypeToBrush}}" />
+                            <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="Color coding follows the room type."
+                       Foreground="{StaticResource TextMutedBrush}" FontSize="10.5" TextWrapping="Wrap" Margin="0,10,0,0" />
+        </StackPanel>
+    </DataTemplate>
+
+</ResourceDictionary>

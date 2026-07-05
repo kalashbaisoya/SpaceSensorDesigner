@@ -1,0 +1,36 @@
+# ---- .NET build output ----
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+*.user
+*.suo
+*.cache
+
+# ---- Publish / installer output ----
+publish/
+installer/dist/
+*.msix
+*.appx
+
+# ---- IDE / editor ----
+.vs/
+.vscode/
+.idea/
+*.DotSettings.user
+
+# ---- NuGet ----
+*.nupkg
+packages/
+project.lock.json
+project.assets.json
+
+# ---- Claude Code personal settings (machine-specific permissions) ----
+.claude/settings.local.json
+
+# ---- OS ----
+Thumbs.db
+.DS_Store
